@@ -83,5 +83,53 @@ namespace L02P02_2022GM650_2022AC601.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EscribirLibros(int idLibro, string usuario, string comentario)
+        {
+            // Verificar si el libro existe
+            var libro = _context.libros.FirstOrDefault(l => l.id == idLibro);
+            if (libro == null)
+            {
+                return NotFound("Libro no encontrado.");
+            }
+
+            // Verificar si el comentario no está vacío
+            if (string.IsNullOrEmpty(comentario))
+            {
+                ModelState.AddModelError("", "El comentario no puede estar vacío.");
+                return RedirectToAction("ComentariosPorLibro", new { idLibro = idLibro });
+            }
+
+            // Mostrar los valores recibidos para depuración
+            Console.WriteLine($"Usuario: {usuario}, Comentario: {comentario}");
+
+            // Crear una nueva entidad de comentario
+            var nuevoComentario = new comentarios_libros
+            {
+                id_libro = idLibro,
+                usuario = usuario,
+                comentarios = comentario,
+                created_at = DateTime.Now
+            };
+
+            // Guardar el comentario en la base de datos
+            _context.comentarios_libros.Add(nuevoComentario);
+            _context.SaveChanges();
+
+            // Redirigir al usuario a la vista de los comentarios del libro
+            return RedirectToAction("ComentariosPorLibro", new { idLibro = idLibro });
+        }
+
+
+
+        public IActionResult ComentarioAdicionado()
+        {
+            
+            return View();
+        }
+
+
+
     }
 }
