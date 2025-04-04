@@ -14,39 +14,56 @@
 <div class="container">
     <ul class="progressbar">
         <li class="active">Autores</li>
-        <li>Libros</li>
+        <li class="active">Libros</li>
         <li>Comentarios Existentes</li>
         <li>Nuevo Comentario</li>
     </ul>
 </div>
 <br />
 
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4>Autor: @ViewData["NombreAutor"]</h4>
+<form asp-action="SeleccionarLibros">
+
+    <div class="container mt-4">
+        <div class="d-flex align-items-center border p-3 gap-4">
+            <!-- 📌 Se usa 'gap-4' para ajustar el espacio -->
+            <span class="fw-bold text-primary">Autor:</span>
+            <span class="fw-bold">@ViewData["NombreAutor"]</span>
         </div>
+    </div>
 
-        <div class="card-body">
-            <h5 class="card-title">Seleccione el Libro del autor</h5>
 
-            <div class="list-group">
-                @{
-                    var libros = ViewData["LibrosDelAutor"] as List<dynamic>;
-                    if (libros != null)
-                    {
-                        foreach (var libro in libros)
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4>Autor: @ViewData["NombreAutor"]</h4>
+            </div>
+
+            <div class="card-body">
+                <h5 class="card-title">Seleccione el Libro del autor</h5>
+
+                <div class="list-group">
+                    @{
+                        var libros = ViewData["LibrosDelAutor"] as IEnumerable<dynamic>;
+                        if (libros != null && libros.Any()) 
                         {
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                               @libro.nombre
-                                @Html.ActionLink("Selecciona", "DetallesLibro", "Libros",
-                                     new { idLibro = libro.id },
-                                     new { @class = "btn btn-primary btn-sm" })
-                            </div>
+                            foreach (var libro in libros)
+                            {
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>@libro.Nombre</span> 
+                                    @Html.ActionLink("Seleccionar", "ComentariosPorLibro", "Libreria",
+                                         new { idLibro = libro.Id },
+                                         new { @class = "btn btn-primary btn-sm" })
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-danger">No hay libros disponibles para este autor.</p> <!-- 📌 Mensaje en caso de lista vacía -->
                         }
                     }
-                }
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+</form>
