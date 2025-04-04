@@ -26,5 +26,33 @@ namespace L02P02_2022GM650_2022AC601.Controllers
 
             return View();
         }
+
+        public IActionResult ListadoLibrosPorAutor(int autorId)
+        {
+          
+            var autor = _context.autores
+                                .FirstOrDefault(a => a.id == autorId);
+
+            ViewData["NombreAutor"] = autor?.autor ?? "Autor no encontrado";
+
+            
+            var librosDelAutor = _context.libros
+                .Where(l => l.id_autor == autorId && l.estado == "A")
+                .Select(l => new
+                {
+                    l.id,
+                    l.nombre
+                })
+                .ToList();
+
+            ViewData["LibrosDelAutor"] = librosDelAutor;
+
+            return View("ListadoLibrosPorAutor");
+        }
+
+
+
+
+
     }
 }
