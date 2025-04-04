@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Comentarios por Libros";
+}
+
+<h1 class="text-center">Comentarios por Libros</h1>
+<p class="text-muted text-center">Seleccione el autor → Seleccione el libro → Se muestran los comentarios existentes → Adicione un nuevo comentario</p>
+
+<form asp-action="SeleccionarAutor">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayName("Autor")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var autor in (IEnumerable<dynamic>)ViewData["listadoAutores"])
+                    {
+                        <tr>
+                             <td>@autor.Nombre</td>
+                            <td>
+                            @Html.ActionLink("Seleccionar", "ListadoLibrosPorAutor", "Libros", new { autorId = autor.Id }, new { @class = "btn btn-success" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
