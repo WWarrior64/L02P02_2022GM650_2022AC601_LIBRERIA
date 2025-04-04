@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Confirmación de Comentario";
+}
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />
+
+<!-- 📌 Encabezado con fondo oscuro -->
+<div class="bg-dark text-white p-4">
+    <h1 class="text-center">Confirmación de Comentario</h1>
+    <p class="text-muted text-center">
+        Seleccione el autor → Seleccione el libro → Se muestran los comentarios existentes → Confirmación del último comentario
+    </p>
+</div>
+
+<!-- 📌 Sección de Autor y Libro Seleccionado -->
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center border p-3">
+        <span class="fw-bold text-primary">Autor:</span>
+        <span class="fw-bold">@ViewData["NombreAutor"]</span>
+
+        <span class="fw-bold text-primary">Libro:</span>
+        <span class="fw-bold">@ViewData["LibroNombre"]</span>
+    </div>
+</div>
+
+<!-- 📌 Sección de Comentarios Existentes -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- 📌 Columna IZQUIERDA: Comentarios existentes -->
+        <div class="col-md-7">
+            <h3>Comentarios Existentes</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>@Html.Label("usuario", "Usuario")</th>
+                        <th>@Html.Label("comentarios", "Comentario")</th>
+                        <th>@Html.Label("created_at", "Fecha de Creación")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var comentario in (IEnumerable<dynamic>)ViewData["listadoComentarios"])
+
+                    {
+                            <tr>
+                                <td>@comentario.usuario</td>
+                                <td>@comentario.comentarios</td>
+                                <td>@comentario.created_at?.ToString("dd-MMM-yyyy HH:mm")</td>
+                            </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 📌 Columna DERECHA: Último comentario en solo lectura -->
+        <div class="col-md-5">
+            <h3>Confirmación del Último Comentario</h3>
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="text-center">Último Comentario Registrado</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Usuario:</strong> @ViewData["UltimoComentarioUsuario"]</p>
+                    <p><strong>Comentario:</strong></p>
+                    <div class="border p-3 bg-light">
+                        <p class="text-muted">@ViewData["UltimoComentarioTexto"]</p> <!-- 📌 Solo lectura -->
+                    </div>
+                    <p><strong>Fecha:</strong> @ViewData["UltimoComentarioFecha"]?.ToString("dd-MMM-yyyy HH:mm")</p>
+                </div>
+            </div>
+
+            <!-- 📌 Mensaje de éxito en lugar del botón -->
+            <div class="alert alert-success text-center mt-3">
+                <strong>Comentario añadido con éxito.</strong>
+            </div>
+        </div>
+    </div>
+</div>
