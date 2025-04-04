@@ -70,9 +70,9 @@ namespace L02P02_2022GM650_2022AC601.Controllers
                 .Where(c => c.id_libro == idLibro)
                 .Select(c => new
                 {
-                    Usuario = c.usuario,
-                    Comentario = c.comentarios,
-                    Fecha = c.created_at
+                    usuario = c.usuario,
+                    comentarios = c.comentarios,
+                    created_at = c.created_at
                 })
                 .ToList();
 
