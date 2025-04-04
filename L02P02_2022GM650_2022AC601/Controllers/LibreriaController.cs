@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace L02P02_2022GM650_2022AC601.Controllers
 {
-    public class AutorController : Controller
+    public class LibreriaController : Controller
     {
         private readonly libreriaDbContext _context;
-        public AutorController(libreriaDbContext context)
+        public LibreriaController(libreriaDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Autor()
         {
             var listadoAutores = _context.autores
                 .Select(a => new

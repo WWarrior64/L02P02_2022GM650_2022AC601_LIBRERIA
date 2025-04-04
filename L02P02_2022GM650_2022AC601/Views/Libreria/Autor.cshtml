@@ -1,9 +1,28 @@
 ﻿@{
     ViewData["Title"] = "Comentarios por Libros";
 }
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />
 
-<h1 class="text-center">Comentarios por Libros</h1>
-<p class="text-muted text-center">Seleccione el autor → Seleccione el libro → Se muestran los comentarios existentes → Adicione un nuevo comentario</p>
+
+
+
+<div class="bg-dark text-white p-4">
+    <h1 class="text-center">@Html.DisplayName("Comentarios por Libros")</h1>
+    <p class="text-muted text-center">
+        Seleccione el autor → Seleccione el libro → Se muestran los comentarios existentes → Adicione un nuevo comentario
+    </p>
+</div>
+
+
+<div class="container">
+    <ul class="progressbar">
+        <li class="active">Autores</li>
+        <li>Libros</li>
+        <li>Comentarios Existentes</li>
+        <li>Nuevo Comentario</li>
+    </ul>
+</div>
+<br />
 
 <form asp-action="SeleccionarAutor">
     <div class="form-group row">
