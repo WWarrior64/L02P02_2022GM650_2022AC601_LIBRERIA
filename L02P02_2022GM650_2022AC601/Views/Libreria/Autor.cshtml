@@ -14,7 +14,7 @@
 </div>
 
 
-<div class="container">
+<div class="container mb-5">
     <ul class="progressbar">
         <li class="active">Autores</li>
         <li>Libros</li>
@@ -37,8 +37,8 @@
                     @foreach (var autor in (IEnumerable<dynamic>)ViewData["listadoAutores"])
                     {
                         <tr>
-                             <td>@autor.Nombre</td>
-                            <td>
+                            <td class="d-flex justify-content-between align-items-center border p-3">
+                            @autor.Nombre
                             @Html.ActionLink("Seleccionar", "ListadoLibrosPorAutor", "Libreria", new { autorId = autor.Id }, new { @class = "btn btn-success" })
                             </td>
                         </tr>
@@ -47,4 +47,13 @@
             </table>
         </div>
     </div>
+
+    <footer class="border-top footer bg-dark text-white text-center p-3">
+        <div class="container">
+            2022-GM-650 - Walter Alexander González Martínez
+            <br />
+            2022-AC-601 - Sara Essie Ascencio Chavéz
+        </div>
+    </footer>
+
 </form>
