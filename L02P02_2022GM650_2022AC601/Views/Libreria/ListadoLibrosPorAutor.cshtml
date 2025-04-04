@@ -23,47 +23,62 @@
 
 <form asp-action="SeleccionarLibros">
 
-    <div class="container mt-4">
+    <div class="container mt-1">
         <div class="d-flex align-items-center border p-3 gap-4">
-            <!-- 📌 Se usa 'gap-4' para ajustar el espacio -->
             <span class="fw-bold text-primary">Autor:</span>
             <span class="fw-bold">@ViewData["NombreAutor"]</span>
         </div>
     </div>
 
 
-    <div class="container mt-4">
+    <div class="container mt-1">
         <div class="card">
-            <div class="card-header bg-primary text-white">
-                <h4>Autor: @ViewData["NombreAutor"]</h4>
-            </div>
-
             <div class="card-body">
-                <h5 class="card-title">Seleccione el Libro del autor</h5>
 
-                <div class="list-group">
-                    @{
-                        var libros = ViewData["LibrosDelAutor"] as IEnumerable<dynamic>;
-                        if (libros != null && libros.Any()) 
-                        {
-                            foreach (var libro in libros)
-                            {
-                                <div class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>@libro.Nombre</span> 
-                                    @Html.ActionLink("Seleccionar", "ComentariosPorLibro", "Libreria",
-                                         new { idLibro = libro.Id },
-                                         new { @class = "btn btn-primary btn-sm" })
-                                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayName("Seleccione el Libro del autor")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var libros = ViewData["LibrosDelAutor"] as IEnumerable<dynamic>;
+                                if (libros != null && libros.Any())
+                                {
+                                    foreach (var libro in libros)
+                                    {
+                                        <tr>
+                                            <td class="d-flex justify-content-between align-items-center border p-3">
+                                                @libro.Nombre
+                                                @Html.ActionLink("Seleccionar", "ComentariosPorLibro", "Libreria",
+                                                     new { idLibro = libro.Id },
+                                                     new { @class = "btn btn-primary btn-sm" })
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="2" class="text-center text-danger">No hay libros disponibles para este autor.</td>
+                                    </tr>
+                                }
                             }
-                        }
-                        else
-                        {
-                            <p class="text-danger">No hay libros disponibles para este autor.</p> <!-- 📌 Mensaje en caso de lista vacía -->
-                        }
-                    }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+
+    <footer class="border-top footer bg-dark text-white text-center p-3">
+        <div class="container">
+            2022-GM-650 - Walter Alexander González Martínez
+            <br />
+            2022-AC-601 - Sara Essie Ascencio Chavéz
+        </div>
+    </footer>
 
 </form>
